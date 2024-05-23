@@ -1,0 +1,50 @@
+{% extends 'public/layout.html' %}
+{% block title %}Registrar Objeto{% endblock %}
+
+{% block body %}
+
+
+<section>
+    <h2>
+        <a href="/" class="left" title="Volver"><i class="bi bi-arrow-left-circle"></i></a>
+        Detalles del Objeto
+        <hr>
+    </h2>
+
+    {% if (infoObjeto) %}
+    
+    <!-- {{ infoCarro }} -->
+
+
+    <div class="card" style="width: 25rem;">
+      {% set urlObjeto = '/static/assets/foto_insert/' %}
+        {% if(infoObjeto.foto) %}
+          <img src="{{ urlObjeto }}{{ infoObjeto.foto }}" class="card-img-top" alt="objeto">
+        {% else %}
+          <img src="{{ urlObjeto }}sin_foto.jpg" class="card-img-top sin_foto" alt="objeto">
+        {% endif %}
+
+        <div class="card-body">
+          <h5 class="card-title"> <strong>{{ infoObjeto.nombre }}</strong></h5>
+        </div>
+
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Nombre: <strong>{{ infoObjeto.nombre}}</strong></li>
+          <li class="list-group-item">Marca: <strong>{{ infoObjeto.marca }}</strong></li>
+          <li class="list-group-item">Color: <strong>{{ infoObjeto.color }}</strong></li>
+          <li class="list-group-item">Peso: <strong>{{ infoObjeto.peso }}</strong></li>
+          <li class="list-group-item">Favorito: <strong>{{ infoObjeto.descripcion }}</strong></li>
+        </ul>
+      </div>
+
+      {% else %}
+      <div class="col-12">
+          <h2 class="text-center">
+              No existe el objeto
+          </h2>
+      </div>
+{% endif %}
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends 'public/layout.html' %}
+{% block title %}Registrar Objeto{% endblock %}
+
+{% block body %}
+
+
+<section>
+    <h2>
+        <a href="/" class="left" title="Volver"><i class="bi bi-arrow-left-circle"></i></a>
+        Actualizar Información del Objeto
+        <hr>
+    </h2>
+
+    {% if (dataInfo) %}
+      <form action="{{ url_for('formActualizarObjeto', idObjeto = dataInfo.id ) }}" method="POST" class="mb-3" autocomplete="off" enctype="multipart/form-data">
+        <input type="text" class="form-control" name="id" value="{{ dataInfo.id }}" required hidden>
+        
+        <div class="row">
+            <div class="col">
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" value="{{ dataInfo.nombre }}" class="form-control">
+            </div>
+            <div class="col">
+                <label for="marca">Marca</label>
+                <input type="text" name="marca" value="{{ dataInfo.marca }}" class="form-control">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label for="color">Color</label>
+                {% with  colores = ["Cafe","Rojo","Gris","Blanco"] %}
+                <select name="color" class="form-control">
+                    {% for color in colores %}
+                        {% if(color == dataInfo.color) %}
+                            <option value="{{ color }}" selected>{{ color }}</option>
+                        {% else %}
+                            <option value="{{ color }}">{{ color }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                {% endwith %}
+            </div>
+            <div class="col">
+                <label for="puertas">Frágil</label>
+                <br><br>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="fragil" value="Si" {{ dataInfo.fragil =='Si' and 'checked' or '' }}>
+                    <label class="form-check-label" for="fragil">Si</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="favorito" value="No" {{ 'checked' if dataInfo.fragil =='No' else '' }}>
+                    <label class="form-check-label" for="fragil">No</label>
+                </div>
+            </div>
+        </div>
+
+    
+        <div class="row">
+            <div class="col">
+                <label for="peso">Peso(Kg)</label>
+                <input type="number" name="peso" value="{{ dataInfo.peso }}" class="form-control">
+            </div>
+
+            <div class="col">
+                <label for="descripcion">Descripción</label>
+                <input type="text" name="descripcion" value="{{ dataInfo.descripcion }}" class="form-control">
+            </div>
+        </div>
+
+
+        <div class="row">
+            {% set urlObjeto = '/static/assets/foto_insert/' %}
+            <div class="col-md-6">
+                {% if(dataInfo.foto !="") %}
+                        <img src="{{ urlObjeto }}{{ dataInfo.foto }}" class="foto_update" alt="{{ dataInfo.nombre }}">
+                    {% else %}
+                        <img src="{{ urlObjeto }}sin_foto.jpg" class="foto_update" alt="objeto">
+                {% endif %}
+            </div>
+            <div class="col-md-6">
+                <label for="foto">Cambiar Foto del Objeto</label>
+                <input type="file" name="foto" class="form-control-file" accept="image/*">
+            </div>
+        </div>
+        <hr>
+        <input class="button-primary mt-3 btn btn-info btn-block bold" type="submit" value="Guardar Actualización">
+    </form>
+
+      {% else %}
+      <div class="col-12">
+          <h2 class="text-center">
+              No existe el Objeto
+          </h2>
+      </div>
+{% endif %}
+
+</section>
+
+{% endblock %}
